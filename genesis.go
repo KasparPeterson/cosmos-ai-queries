@@ -13,5 +13,19 @@ func (gs *GenesisState) Validate() error {
 		return err
 	}
 
+	unique := make(map[string]bool)
+	for _, indexedStoredQuery := range gs.IndexedStoredQueryList {
+		if length := len([]byte(indexedStoredQuery.Index)); MaxIndexLength < length || length < 1 {
+			return ErrIndexTooLong
+		}
+		if _, ok := unique[indexedStoredQuery.Index]; ok {
+			return ErrDuplicateAddress
+		}
+		if err := indexedStoredQuery.StoredQuery.Validate(); err != nil {
+			return err
+		}
+		unique[indexedStoredQuery.Index] = true
+	}
+
 	return nil
 }

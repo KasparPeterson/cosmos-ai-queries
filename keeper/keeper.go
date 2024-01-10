@@ -20,8 +20,9 @@ type Keeper struct {
 	authority string
 
 	// state management
-	Schema collections.Schema
-	Params collections.Item[cosmos_ai_queries.Params]
+	Schema        collections.Schema
+	Params        collections.Item[cosmos_ai_queries.Params]
+	StoredQueries collections.Map[string, cosmos_ai_queries.StoredQuery]
 }
 
 // NewKeeper creates a new Keeper instance
@@ -36,6 +37,9 @@ func NewKeeper(cdc codec.BinaryCodec, addressCodec address.Codec, storeService s
 		addressCodec: addressCodec,
 		authority:    authority,
 		Params:       collections.NewItem(sb, cosmos_ai_queries.ParamsKey, "params", codec.CollValue[cosmos_ai_queries.Params](cdc)),
+		StoredQueries: collections.NewMap(sb,
+			cosmos_ai_queries.StoredQueriesKey, "storedQueries", collections.StringKey,
+			codec.CollValue[cosmos_ai_queries.StoredQuery](cdc)),
 	}
 
 	schema, err := sb.Build()
