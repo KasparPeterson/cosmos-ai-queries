@@ -24,9 +24,9 @@ type queryServer struct {
 
 // GetGame defines the handler for the Query/GetGame RPC method.
 func (qs queryServer) GetQuery(ctx context.Context, req *cosmos_ai_queries.QueryGetQueryRequest) (*cosmos_ai_queries.QueryGetQueryResponse, error) {
-	game, err := qs.k.StoredQueries.Get(ctx, req.Index)
+	query, err := qs.k.StoredQueries.Get(ctx, req.Index)
 	if err == nil {
-		return &cosmos_ai_queries.QueryGetQueryResponse{Query: &game}, nil
+		return &cosmos_ai_queries.QueryGetQueryResponse{Query: &query}, nil
 	}
 	if errors.Is(err, collections.ErrNotFound) {
 		return &cosmos_ai_queries.QueryGetQueryResponse{Query: nil}, nil

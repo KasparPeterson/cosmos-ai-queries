@@ -43,3 +43,16 @@ func (ms msgServer) CreateQuery(ctx context.Context, msg *cosmos_ai_queries.MsgC
 
 	return &cosmos_ai_queries.MsgCreateQueryResponse{}, nil
 }
+
+func (ms msgServer) PostQueryAnswer(ctx context.Context, msg *cosmos_ai_queries.MsgPostQueryAnswer) (*cosmos_ai_queries.MsgPostQueryAnswerResponse, error) {
+	query, err := ms.k.StoredQueries.Get(ctx, msg.Index)
+	if err != nil {
+		return nil, fmt.Errorf("query does not exist at index: %s", msg.Index)
+	}
+	query.Answer = msg.Answer
+	if err := ms.k.StoredQueries.Set(ctx, msg.Index, query); err != nil {
+		return nil, fmt.Errorf("failed to add answer at index: %s", msg.Index)
+	}
+
+	return &cosmos_ai_queries.MsgPostQueryAnswerResponse{}, nil
+}

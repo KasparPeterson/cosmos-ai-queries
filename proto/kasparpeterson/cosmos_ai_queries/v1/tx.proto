@@ -16,8 +16,8 @@ service Msg {
   rpc CreateQuery(MsgCreateQuery)
       returns (MsgCreateQueryResponse);
 
-  //rpc PostQueryAnswer(MsgPostQueryAnswer)
-  //    returns (MsgPostQueryAnswerResponse);
+  rpc PostQueryAnswer(MsgPostQueryAnswer)
+      returns (MsgPostQueryAnswerResponse);
 }
 
 // MsgCreateGame defines the Msg/CreateGame request type.

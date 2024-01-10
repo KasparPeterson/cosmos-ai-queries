@@ -33,6 +33,15 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "query"},
 					},
 				},
+				{
+					RpcMethod: "PostQueryAnswer",
+					Use:       "post index answer",
+					Short:     "Posts AI answer at the index",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "index"},
+						{ProtoField: "answer"},
+					},
+				},
 			},
 		},
 	}
