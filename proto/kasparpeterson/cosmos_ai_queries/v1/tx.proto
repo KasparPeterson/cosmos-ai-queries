@@ -1,0 +1,45 @@
+syntax = "proto3";
+package kasparpeterson.cosmos_ai_queries.v1;
+
+option go_package = "github.com/kasparpeterson/cosmos_ai_queries";
+
+import "cosmos/msg/v1/msg.proto";
+import "gogoproto/gogo.proto";
+import "kasparpeterson/cosmos_ai_queries/v1/types.proto";
+import "cosmos_proto/cosmos.proto";
+
+// Msg defines the module Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // CreateGame create a game.
+  rpc CreateQuery(MsgCreateQuery)
+      returns (MsgCreateQueryResponse);
+
+  //rpc PostQueryAnswer(MsgPostQueryAnswer)
+  //    returns (MsgPostQueryAnswerResponse);
+}
+
+// MsgCreateGame defines the Msg/CreateGame request type.
+message MsgCreateQuery {
+  option (cosmos.msg.v1.signer) = "creator";
+
+  // creator is the message sender.
+  string creator = 1;
+  string query = 2;
+  string index = 3;
+}
+
+// MsgCreateQueryResponse defines the Msg/CreateQuery response type.
+message MsgCreateQueryResponse {}
+
+message MsgPostQueryAnswer {
+  option (cosmos.msg.v1.signer) = "creator";
+
+  // creator is the message sender.
+  string creator = 1;
+  string index = 2;
+  string answer = 3;
+}
+
+message MsgPostQueryAnswerResponse {}
