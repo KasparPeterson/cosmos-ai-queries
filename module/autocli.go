@@ -34,6 +34,15 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					},
 				},
 				{
+					RpcMethod: "CreateSyncQuery",
+					Use:       "createsync index query",
+					Short:     "Creates a new sync AI query at index that answers in one transaction",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "index"},
+						{ProtoField: "query"},
+					},
+				},
+				{
 					RpcMethod: "PostQueryAnswer",
 					Use:       "post index answer",
 					Short:     "Posts AI answer at the index",

@@ -16,6 +16,9 @@ service Msg {
   rpc CreateQuery(MsgCreateQuery)
       returns (MsgCreateQueryResponse);
 
+  rpc CreateSyncQuery(MsgCreateSyncQuery)
+      returns (MsgCreateSyncQueryResponse);
+
   rpc PostQueryAnswer(MsgPostQueryAnswer)
       returns (MsgPostQueryAnswerResponse);
 }
@@ -43,3 +46,16 @@ message MsgPostQueryAnswer {
 }
 
 message MsgPostQueryAnswerResponse {}
+
+message MsgCreateSyncQuery {
+  option (cosmos.msg.v1.signer) = "creator";
+
+  // creator is the message sender.
+  string creator = 1;
+  string query = 2;
+  string index = 3;
+}
+
+message MsgCreateSyncQueryResponse {
+  string answer = 1;
+}
